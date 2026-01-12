@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Sheet to Notion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .last-updated {
+            color: #888;
+            font-size: 0.875rem;
+            margin-top: 10px;
+        }
+
+        section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #4285f4;
+            display: inline-block;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: #444;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .highlight {
+            background-color: #e8f0fe;
+            padding: 16px;
+            border-radius: 6px;
+            border-left: 4px solid #4285f4;
+            margin: 16px 0;
+        }
+
+        .highlight p {
+            margin-bottom: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 0.875rem;
+        }
+
+        a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">Sheet to Notion - Chrome Extension</p>
+            <p class="last-updated">Last updated: January 12, 2026</p>
+        </header>
+
+        <section>
+            <h2>Overview</h2>
+            <p>Sheet to Notion is a Chrome extension that allows you to export data from Google Sheets to Notion pages. We are committed to protecting your privacy and being transparent about how we handle your data.</p>
+            <div class="highlight">
+                <p><strong>Key Point:</strong> We do not collect, store, or transmit any of your personal data to our servers. All data processing happens locally in your browser.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Data We Access</h2>
+            <p>To provide its functionality, the extension accesses the following data:</p>
+            <ul>
+                <li><strong>Google Sheets Data:</strong> When you choose to export a spreadsheet, the extension reads the content of that specific sheet. This data is only used to create the corresponding content in Notion and is never stored or transmitted elsewhere.</li>
+                <li><strong>Google Account Information:</strong> We use Google OAuth to authenticate you and obtain read-only access to your spreadsheets. We only request the minimum permission needed (<code>spreadsheets.readonly</code>).</li>
+                <li><strong>Notion API Token:</strong> You provide your Notion integration token to enable the extension to create pages in your Notion workspace. This token is stored locally in your browser using Chrome's secure storage API.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data Storage</h2>
+            <p>The extension stores the following data locally in your browser:</p>
+            <ul>
+                <li><strong>Notion API Token:</strong> Stored securely using Chrome's <code>chrome.storage.local</code> API to persist your connection to Notion.</li>
+                <li><strong>Selected Notion Page ID:</strong> Stored locally to remember your preferred destination page.</li>
+                <li><strong>Export Preferences:</strong> Your chosen export mode (Table or Database) is stored locally.</li>
+            </ul>
+            <p>This data never leaves your browser and is not transmitted to any external servers owned by us.</p>
+        </section>
+
+        <section>
+            <h2>Third-Party Services</h2>
+            <p>The extension communicates directly with the following third-party services:</p>
+            <ul>
+                <li><strong>Google APIs:</strong> To authenticate your Google account and read spreadsheet data. Subject to <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a>.</li>
+                <li><strong>Notion API:</strong> To create pages, tables, and databases in your Notion workspace. Subject to <a href="https://www.notion.so/Privacy-Policy-3468d120cf614d4c9014c09f6adc9091" target="_blank">Notion's Privacy Policy</a>.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data We Do NOT Collect</h2>
+            <p>We want to be clear about what we do NOT do:</p>
+            <ul>
+                <li>We do NOT collect any personal information</li>
+                <li>We do NOT track your browsing activity</li>
+                <li>We do NOT store your spreadsheet data</li>
+                <li>We do NOT use analytics or tracking tools</li>
+                <li>We do NOT share any data with third parties</li>
+                <li>We do NOT have access to your Google or Notion credentials</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Rights</h2>
+            <p>You have full control over your data:</p>
+            <ul>
+                <li><strong>Disconnect Google:</strong> You can disconnect your Google account at any time through the extension's settings.</li>
+                <li><strong>Remove Notion Token:</strong> You can remove your Notion integration token through the extension's settings.</li>
+                <li><strong>Uninstall:</strong> Uninstalling the extension will remove all locally stored data.</li>
+                <li><strong>Revoke Access:</strong> You can revoke the extension's access to your Google account at <a href="https://myaccount.google.com/permissions" target="_blank">Google Account Permissions</a>.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Security</h2>
+            <p>We implement security best practices:</p>
+            <ul>
+                <li>All communication with Google and Notion APIs uses HTTPS encryption</li>
+                <li>OAuth 2.0 is used for secure Google authentication</li>
+                <li>Your Notion token is stored using Chrome's secure storage API</li>
+                <li>The extension only requests minimum necessary permissions</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Changes to This Policy</h2>
+            <p>We may update this privacy policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.</p>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <p>If you have any questions or concerns about this privacy policy or the extension's data practices, please contact us by opening an issue on our GitHub repository.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Sheet to Notion. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
