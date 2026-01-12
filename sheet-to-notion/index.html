@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet to Notion - Export Google Sheets to Notion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            padding: 40px 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .how-it-works {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-weight: 700;
+        }
+
+        .step h4 {
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .setup-guide {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .setup-guide h2 {
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .setup-guide h3 {
+            margin: 24px 0 12px;
+            color: #333;
+        }
+
+        .setup-guide ol {
+            margin-left: 20px;
+            color: #444;
+        }
+
+        .setup-guide li {
+            margin-bottom: 8px;
+        }
+
+        .setup-guide a {
+            color: #667eea;
+        }
+
+        .setup-guide code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note p {
+            margin: 0;
+            color: #856404;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        footer a {
+            color: white;
+            opacity: 0.9;
+        }
+
+        footer a:hover {
+            opacity: 1;
+        }
+
+        .footer-links {
+            margin-top: 16px;
+        }
+
+        .footer-links a {
+            margin: 0 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📊 → 📝</div>
+            <h1>Sheet to Notion</h1>
+            <p class="tagline">Export Google Sheets to Notion with one click</p>
+            <a href="#" class="cta-button">Install from Chrome Web Store</a>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>One-Click Export</h3>
+                <p>Export any Google Sheet to Notion instantly. No copy-pasting required.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Table or Database</h3>
+                <p>Choose between Notion tables for simple data or databases for advanced features.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Smart Type Detection</h3>
+                <p>Automatically detects numbers, dates, checkboxes, and text from your spreadsheet.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>All data stays in your browser. We never store or access your spreadsheet data.</p>
+            </div>
+        </div>
+
+        <div class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Connect Google</h4>
+                    <p>Sign in with your Google account for secure access</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Add Notion Token</h4>
+                    <p>Create a Notion integration and paste the token</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Select Page</h4>
+                    <p>Choose where to export your data in Notion</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Export</h4>
+                    <p>Click export and your data appears in Notion</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="setup-guide">
+            <h2>How to Create a Notion Integration Token</h2>
+            <p>To connect the extension to your Notion workspace, you need to create an integration:</p>
+
+            <h3>Step 1: Create an Integration</h3>
+            <ol>
+                <li>Go to <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a></li>
+                <li>Click <strong>"+ New integration"</strong></li>
+                <li>Give it a name (e.g., "Sheet to Notion")</li>
+                <li>Select the workspace you want to use</li>
+                <li>Click <strong>"Submit"</strong></li>
+            </ol>
+
+            <h3>Step 2: Copy the Integration Token</h3>
+            <ol>
+                <li>After creating the integration, you'll see an <strong>"Internal Integration Secret"</strong></li>
+                <li>Click <strong>"Show"</strong> then <strong>"Copy"</strong></li>
+                <li>Paste this token into the extension when prompted</li>
+            </ol>
+
+            <h3>Step 3: Connect Integration to Your Pages</h3>
+            <div class="note">
+                <p><strong>Important:</strong> Notion integrations don't have access to any pages by default. You must explicitly share pages with your integration.</p>
+            </div>
+            <ol>
+                <li>Open the Notion page where you want to export sheets</li>
+                <li>Click the <strong>"..."</strong> menu in the top-right corner</li>
+                <li>Scroll down and click <strong>"+ Add connections"</strong></li>
+                <li>Search for your integration name and select it</li>
+                <li>Click <strong>"Confirm"</strong></li>
+            </ol>
+            <p>Now the extension can create tables and databases on that page.</p>
+        </div>
+
+        <footer>
+            <p>Made with ❤️ for productivity enthusiasts</p>
+            <div class="footer-links">
+                <a href="./privacy/">Privacy Policy</a>
+                <a href="https://github.com/rmzs0711/sheets-to-notion-privacy-policy/issues" target="_blank">Support</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
