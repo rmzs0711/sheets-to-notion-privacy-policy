@@ -215,22 +215,16 @@
     }
 
     /**
-     * Send result back to extension
+     * Send result back to extension via external messaging
      */
     function sendToExtension(data) {
-      if (extensionId) {
-        // Try chrome.runtime.sendMessage if available (for when opened as popup)
-        if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
-          try {
-            chrome.runtime.sendMessage(extensionId, data);
-          } catch (e) {
-            console.log('Could not send via chrome.runtime:', e);
-          }
-        }
-
-        // Also use postMessage for opener window
-        if (window.opener) {
-          window.opener.postMessage(data, '*');
+      if (extensionId && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
+        try {
+          chrome.runtime.sendMessage(extensionId, data, (response) => {
+            console.log('Extension response:', response);
+          });
+        } catch (e) {
+          console.log('Could not send to extension:', e);
         }
       }
     }
