@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select a Spreadsheet - Sheet to Notion</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 48px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #4285f4;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 24px auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error {
+      color: #d32f2f;
+      background: #ffebee;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    .btn {
+      background: #4285f4;
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background: #3367d6;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+    }
+
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    #status {
+      margin-top: 24px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+      color: #34a853;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Loading State -->
+    <div id="loading-state">
+      <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <h1>Sheet to Notion</h1>
+      <p id="message">Loading Google Picker...</p>
+      <div class="spinner" id="spinner"></div>
+    </div>
+
+    <!-- Ready State -->
+    <div id="ready-state" class="hidden">
+      <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <h1>Select a Spreadsheet</h1>
+      <p>Choose a Google Sheets file to export to Notion</p>
+      <button id="open-picker-btn" class="btn">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Browse Google Drive
+      </button>
+    </div>
+
+    <!-- Success State -->
+    <div id="success-state" class="hidden">
+      <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <h1>File Selected!</h1>
+      <p id="selected-file-name">spreadsheet.xlsx</p>
+      <p id="status">Returning to extension...</p>
+    </div>
+
+    <!-- Error Display -->
+    <div id="error" class="error hidden"></div>
+    <button id="retry-btn" class="btn hidden" style="margin-top: 16px;">Try Again</button>
+  </div>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    /**
+     * Google Picker for Sheet to Notion Extension
+     * This page is hosted externally and communicates with the extension via URL parameters
+     */
+
+    // Configuration
+    const CLIENT_ID = '652720169352-ljcdi48csjjktlomlm27qrb87c0009oi.apps.googleusercontent.com';
+    const APP_ID = '652720169352';
+    const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+
+    // Get extension ID from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const extensionId = urlParams.get('extensionId');
+    const authToken = urlParams.get('token');
+
+    // DOM Elements
+    const loadingState = document.getElementById('loading-state');
+    const readyState = document.getElementById('ready-state');
+    const successState = document.getElementById('success-state');
+    const messageEl = document.getElementById('message');
+    const spinnerEl = document.getElementById('spinner');
+    const errorEl = document.getElementById('error');
+    const retryBtn = document.getElementById('retry-btn');
+    const openPickerBtn = document.getElementById('open-picker-btn');
+    const selectedFileName = document.getElementById('selected-file-name');
+
+    let pickerApiLoaded = false;
+
+    /**
+     * Show error message
+     */
+    function showError(msg) {
+      spinnerEl.classList.add('hidden');
+      errorEl.textContent = msg;
+      errorEl.classList.remove('hidden');
+      retryBtn.classList.remove('hidden');
+    }
+
+    /**
+     * Send result back to extension
+     */
+    function sendToExtension(data) {
+      if (extensionId) {
+        // Try chrome.runtime.sendMessage if available (for when opened as popup)
+        if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
+          try {
+            chrome.runtime.sendMessage(extensionId, data);
+          } catch (e) {
+            console.log('Could not send via chrome.runtime:', e);
+          }
+        }
+
+        // Also use postMessage for opener window
+        if (window.opener) {
+          window.opener.postMessage(data, '*');
+        }
+      }
+    }
+
+    /**
+     * Load the Google Picker API
+     */
+    function loadPickerApi() {
+      return new Promise((resolve, reject) => {
+        gapi.load('picker', {
+          callback: () => {
+            pickerApiLoaded = true;
+            resolve();
+          },
+          onerror: () => {
+            reject(new Error('Failed to load Picker API'));
+          }
+        });
+      });
+    }
+
+    /**
+     * Create and show the Google Picker
+     */
+    function createPicker() {
+      if (!pickerApiLoaded || !authToken) {
+        showError('Picker not ready. Please try again.');
+        return;
+      }
+
+      const view = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+        .setIncludeFolders(true)
+        .setSelectFolderEnabled(false);
+
+      const picker = new google.picker.PickerBuilder()
+        .setAppId(APP_ID)
+        .setOAuthToken(authToken)
+        .addView(view)
+        .setCallback(pickerCallback)
+        .setTitle('Select a Spreadsheet')
+        .build();
+
+      picker.setVisible(true);
+    }
+
+    /**
+     * Handle Picker selection
+     */
+    function pickerCallback(data) {
+      if (data.action === google.picker.Action.PICKED) {
+        const doc = data.docs[0];
+
+        // Show success state
+        loadingState.classList.add('hidden');
+        readyState.classList.add('hidden');
+        successState.classList.remove('hidden');
+        selectedFileName.textContent = doc.name;
+
+        // Send to extension
+        sendToExtension({
+          type: 'PICKER_FILE_SELECTED',
+          file: {
+            id: doc.id,
+            name: doc.name,
+            mimeType: doc.mimeType,
+            url: doc.url
+          }
+        });
+
+        // Close window after delay
+        setTimeout(() => {
+          window.close();
+        }, 2000);
+
+      } else if (data.action === google.picker.Action.CANCEL) {
+        sendToExtension({ type: 'PICKER_CANCELLED' });
+        window.close();
+      }
+    }
+
+    /**
+     * Initialize
+     */
+    async function init() {
+      try {
+        // Validate params
+        if (!authToken) {
+          showError('Missing authentication token. Please try again from the extension.');
+          return;
+        }
+
+        messageEl.textContent = 'Loading Google Picker...';
+
+        // Load Picker API
+        await loadPickerApi();
+
+        // Show ready state
+        loadingState.classList.add('hidden');
+        readyState.classList.remove('hidden');
+
+        // Auto-open picker
+        createPicker();
+
+      } catch (error) {
+        console.error('Init error:', error);
+        showError(error.message);
+      }
+    }
+
+    // Event listeners
+    openPickerBtn.addEventListener('click', createPicker);
+    retryBtn.addEventListener('click', () => {
+      errorEl.classList.add('hidden');
+      retryBtn.classList.add('hidden');
+      loadingState.classList.remove('hidden');
+      readyState.classList.add('hidden');
+      spinnerEl.classList.remove('hidden');
+      init();
+    });
+
+    // Start
+    init();
+  </script>
+</body>
+</html>
