@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sheet to Notion - Export Google Sheets to Notion</title>
+    <title>Sheet to Notion - Google Sheets Add-on</title>
     <style>
         * {
             margin: 0;
@@ -24,6 +24,19 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            opacity: 1;
         }
 
         header {
@@ -47,6 +60,15 @@
             font-size: 1.25rem;
             opacity: 0.9;
             margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
         }
 
         .cta-button {
@@ -222,11 +244,14 @@
 
 <body>
     <div class="container">
+        <a href="/" class="back-link">&larr; Back to rmzs0711.dev</a>
+
         <header>
-            <div class="logo">📊 → 📝</div>
+            <div class="logo">📊 &rarr; 📝</div>
+            <span class="badge">Google Sheets Add-on</span>
             <h1>Sheet to Notion</h1>
             <p class="tagline">Export Google Sheets to Notion with one click</p>
-            <a href="#" class="cta-button">Install from Chrome Web Store</a>
+            <a href="https://workspace.google.com/marketplace" class="cta-button">Install from Google Workspace Marketplace</a>
         </header>
 
         <div class="features">
@@ -237,18 +262,18 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📋</div>
-                <h3>Table or Database</h3>
-                <p>Choose between Notion tables for simple data or databases for advanced features.</p>
+                <h3>Smart Structure</h3>
+                <p>Single sheets export as one page. Multiple sheets create organized sub-pages automatically.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔍</div>
-                <h3>Smart Type Detection</h3>
-                <p>Automatically detects numbers, dates, checkboxes, and text from your spreadsheet.</p>
+                <div class="feature-icon">📊</div>
+                <h3>Large Table Support</h3>
+                <p>Handles spreadsheets with hundreds of rows by automatically batching requests.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔒</div>
                 <h3>Secure & Private</h3>
-                <p>All data stays in your browser. We never store or access your spreadsheet data.</p>
+                <p>Your credentials are stored securely per-user. We never access your data.</p>
             </div>
         </div>
 
@@ -257,13 +282,13 @@
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h4>Connect Google</h4>
-                    <p>Sign in with your Google account for secure access</p>
+                    <h4>Open Add-on</h4>
+                    <p>In Google Sheets, click "Sheet to Notion" from the menu</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h4>Add Notion Token</h4>
-                    <p>Create a Notion integration and paste the token</p>
+                    <h4>Connect Notion</h4>
+                    <p>Enter your Notion integration token (one-time setup)</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
@@ -273,19 +298,18 @@
                 <div class="step">
                     <div class="step-number">4</div>
                     <h4>Export</h4>
-                    <p>Click export and your data appears in Notion</p>
+                    <p>Click export and your data appears as a Notion table</p>
                 </div>
             </div>
         </div>
 
         <div class="setup-guide">
             <h2>How to Create a Notion Integration Token</h2>
-            <p>To connect the extension to your Notion workspace, you need to create an integration:</p>
+            <p>To connect the add-on to your Notion workspace, you need to create an integration:</p>
 
             <h3>Step 1: Create an Integration</h3>
             <ol>
-                <li>Go to <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a>
-                </li>
+                <li>Go to <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a></li>
                 <li>Click <strong>"+ New integration"</strong></li>
                 <li>Give it a name (e.g., "Sheet to Notion")</li>
                 <li>Select the workspace you want to use</li>
@@ -296,13 +320,12 @@
             <ol>
                 <li>After creating the integration, you'll see an <strong>"Internal Integration Secret"</strong></li>
                 <li>Click <strong>"Show"</strong> then <strong>"Copy"</strong></li>
-                <li>Paste this token into the extension when prompted</li>
+                <li>Paste this token into the add-on when prompted</li>
             </ol>
 
             <h3>Step 3: Connect Integration to Your Pages</h3>
             <div class="note">
-                <p><strong>Important:</strong> Notion integrations don't have access to any pages by default. You must
-                    explicitly share pages with your integration.</p>
+                <p><strong>Important:</strong> Notion integrations don't have access to any pages by default. You must explicitly share pages with your integration.</p>
             </div>
             <ol>
                 <li>Open the Notion page where you want to export sheets</li>
@@ -311,14 +334,15 @@
                 <li>Search for your integration name and select it</li>
                 <li>Click <strong>"Confirm"</strong></li>
             </ol>
-            <p>Now the extension can create tables and databases on that page.</p>
+            <p>Now the add-on can create tables on that page.</p>
         </div>
 
         <footer>
-            <p>Made with ❤️ for productivity enthusiasts</p>
+            <p>Made with care for productivity enthusiasts</p>
             <div class="footer-links">
+                <a href="/">Home</a>
                 <a href="./privacy/">Privacy Policy</a>
-                <a href="https://github.com/rmzs0711/sheets-to-notion-privacy-policy/issues" target="_blank">Support</a>
+                <a href="mailto:support@rmzs0711.dev">Support</a>
             </div>
         </footer>
     </div>
